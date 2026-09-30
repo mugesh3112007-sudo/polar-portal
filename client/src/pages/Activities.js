@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../util/api';
+
+const BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 export default function Activities() {
   const [data, setData] = useState([]);
-  useEffect(() => { axios.get('/api/activities').then(res => setData(res.data)); }, []);
+  useEffect(() => { api.get('/api/activities').then(res => setData(res.data)); }, []);
   return (
     <section style={{ padding: 24 }}>
       <h2>Institutional Activities</h2>
       <ul>
         {data.map(a => (
-          <li key={a._id}>
-            <strong>{a.title}</strong> <span>({a.category})</span>
+          <li key={a._id} style={{ marginBottom: 16 }}>
+            <strong>{a.title}</strong> <span>({a.category})</span> <span>{a.date?.slice(0, 10)}</span>
             <div>{a.description}</div>
             {a.attachments && a.attachments.map(f => (
-              <a key={f} href={'/uploads/' + f} target="_blank" rel="noreferrer">{f}</a>
+              <a key={f} href={`${BASE}/uploads/${f}`} target="_blank" rel="noreferrer" style={{ marginRight: 8 }}>📎 {f}</a>
             ))}
           </li>
         ))}

@@ -1,38 +1,37 @@
 import React, { useRef, useState } from 'react';
-import axios from 'axios';
+import api from '../../util/api';
 import { useAuth } from '../../util/auth';
 
 export default function MediaForm() {
   const { token } = useAuth();
   const formRef = useRef();
   const [msg, setMsg] = useState('');
+
   const handleSubmit = async e => {
     e.preventDefault();
-    const form = formRef.current;
-    const fd = new FormData(form);
+    const fd = new FormData(formRef.current);
     try {
-      await axios.post('/api/media', fd, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      setMsg('Media uploaded!');
-      form.reset();
+      await api.post('/api/media', fd, { headers: { Authorization: `Bearer ${token}` } });
+      setMsg('✅ Media uploaded!');
+      formRef.current.reset();
     } catch (err) {
-      setMsg(err.response?.data?.message || 'Error uploading');
+      setMsg('❌ ' + (err.response?.data?.message || 'Error uploading'));
     }
   };
   return (
-    <form ref={formRef} onSubmit={handleSubmit} style={{margin:'16px 0', padding:12, background:'#fef'}}>
-      <h4>Upload Media (Photo/Video)</h4>
+    <form ref={formRef} onSubmit={handleSubmit} style={{ margin: '16px 0', padding: 16, background: '#fef', borderRadius: 8 }}>
+      <h4>🖼️ Upload Media (Photo/Video)</h4>
       <select name="type" required>
         <option value="">Select type</option>
         <option value="photo">Photo</option>
         <option value="video">Video</option>
-      </select><br/>
-      <input type="file" name="file" required /><br/>
-      <input name="caption" placeholder="Caption" /><br/>
-      <input name="relatedExpeditions" placeholder="Related Expedition IDs (comma)" /><br/>
-      <input name="tags" placeholder="Tags (comma)" /><br/>
-      <button type="submit">Add Media</button><span> {msg}</span>
+      </select><br /><br />
+      <label>File: <input type="file" name="file" required /></label><br /><br />
+      <input name="caption" placeholder="Caption" style={{ width: '100%' }} /><br /><br />
+      <input name="relatedExpeditions" placeholder="Related Expedition IDs (comma)" style={{ width: '100%' }} /><br /><br />
+      <input name="tags" placeholder="Tags (comma separated)" style={{ width: '100%' }} /><br /><br />
+      <button type="submit">Add Media</button>
+      {msg && <span style={{ marginLeft: 12 }}>{msg}</span>}
     </form>
   );
 }
