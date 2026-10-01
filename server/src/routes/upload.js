@@ -1,10 +1,21 @@
 const multer = require('multer');
-const path = require('path');
-const UPLOAD_DIR = process.env.UPLOAD_DIR || 'uploads';
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '../..', UPLOAD_DIR)),
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname.replace(/\s+/g, '')),
+// Configure Cloudinary with environment variables
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Configure Multer to push files directly to Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'polar-portal',
+    resource_type: 'auto', // Allows non-image files like PDFs, datasets, videos
+  },
 });
 
 const upload = multer({ storage });

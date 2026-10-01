@@ -24,7 +24,7 @@ router.post('/', authRequired, upload.single('pdfFile'), async (req, res) => {
     const pub = new Publication({
       title, authors: authors ? authors.split(',').map(a => a.trim()) : [],
       abstract, journal, publishedOn,
-      pdfUrl: req.file?.filename,
+      pdfUrl: req.file?.path,
       tags: tags ? tags.split(',').map(t => t.trim()) : [],
     });
     await pub.save();

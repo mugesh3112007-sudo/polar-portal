@@ -24,7 +24,7 @@ router.post('/', authRequired, upload.single('datasetFile'), async (req, res) =>
     const set = new Dataset({
       title, description, publishedOn,
       tags: tags ? tags.split(',').map(t => t.trim()) : [],
-      datasetFile: req.file?.filename,
+      datasetFile: req.file?.path,
       metadata: metadata ? JSON.parse(metadata) : {},
     });
     await set.save();

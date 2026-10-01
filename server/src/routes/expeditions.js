@@ -28,9 +28,9 @@ router.post('/', authRequired, upload.fields([
     const exp = new Expedition({
       title, description, date,
       tags: tags ? tags.split(',').map(t => t.trim()) : [],
-      reportFile: req.files['reportFile']?.[0]?.filename,
-      photos: (req.files['photos']||[]).map(f => f.filename),
-      videos: (req.files['videos']||[]).map(f => f.filename),
+      reportFile: req.files['reportFile']?.[0]?.path,
+      photos: (req.files['photos']||[]).map(f => f.path),
+      videos: (req.files['videos']||[]).map(f => f.path),
     });
     await exp.save();
     res.json(exp);

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import api from '../util/api';
 
+const getFileUrl = (url) => url.startsWith('http') ? url : `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/uploads/${url}`;
+
 export default function Publications() {
   const [data, setData] = useState([]);
   useEffect(() => { api.get('/api/publications').then(res => setData(res.data)); }, []);
@@ -14,7 +16,7 @@ export default function Publications() {
             <div>{pub.authors && pub.authors.join(', ')}</div>
             <div>{pub.abstract}</div>
             {pub.pdfUrl && (
-              <a href={`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/uploads/${pub.pdfUrl}`} target="_blank" rel="noreferrer">📄 PDF</a>
+              <a href={getFileUrl(pub.pdfUrl)} target="_blank" rel="noreferrer">📄 PDF</a>
             )}
           </li>
         ))}

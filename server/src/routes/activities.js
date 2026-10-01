@@ -23,7 +23,7 @@ router.post('/', authRequired, upload.array('attachments', 5), async (req, res) 
     const { title, description, date, category } = req.body;
     const act = new InstitutionalActivity({
       title, description, date, category,
-      attachments: (req.files||[]).map(f => f.filename)
+      attachments: (req.files||[]).map(f => f.path)
     });
     await act.save();
     res.json(act);

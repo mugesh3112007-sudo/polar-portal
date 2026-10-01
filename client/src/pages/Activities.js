@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../util/api';
 
-const BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const getFileUrl = (url) => url.startsWith('http') ? url : `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/uploads/${url}`;
 
 export default function Activities() {
   const [data, setData] = useState([]);
@@ -15,7 +15,7 @@ export default function Activities() {
             <strong>{a.title}</strong> <span>({a.category})</span> <span>{a.date?.slice(0, 10)}</span>
             <div>{a.description}</div>
             {a.attachments && a.attachments.map(f => (
-              <a key={f} href={`${BASE}/uploads/${f}`} target="_blank" rel="noreferrer" style={{ marginRight: 8 }}>📎 {f}</a>
+              <a key={f} href={getFileUrl(f)} target="_blank" rel="noreferrer" style={{ marginRight: 8 }}>📎 View Attachment</a>
             ))}
           </li>
         ))}

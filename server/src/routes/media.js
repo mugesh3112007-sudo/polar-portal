@@ -23,7 +23,7 @@ router.post('/', authRequired, upload.single('file'), async (req, res) => {
     const { type, caption, relatedExpeditions, tags } = req.body;
     const med = new Media({
       type,
-      url: req.file?.filename,
+      url: req.file?.path,
       caption,
       relatedExpeditions: relatedExpeditions ? relatedExpeditions.split(',').map(e => e.trim()) : [],
       tags: tags ? tags.split(',').map(t => t.trim()) : []
