@@ -7,7 +7,7 @@ import MediaForm from './forms/MediaForm';
 import ActivityForm from './forms/ActivityForm';
 
 export default function AdminDashboard() {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   return (
     <section style={{ padding: 24 }}>
       <h2>Admin Dashboard</h2>
