@@ -5,20 +5,6 @@ const User = require('../models/User');
 
 const router = express.Router();
 
-// Register admin
-router.post('/register', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const userExists = await User.findOne({ email });
-    if (userExists) return res.status(400).json({ message: 'User exists' });
-    const hash = await bcrypt.hash(password, 10);
-    const user = await User.create({ email, password: hash, role: 'admin' });
-    res.json({ message: 'Registered', user: { id: user._id, email: user.email } });
-  } catch (e) {
-    res.status(500).json({ message: 'Error', error: e.message });
-  }
-});
-
 // Login admin
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
