@@ -16,6 +16,7 @@ export default function Datasets() {
           <li key={d._id} style={{ marginBottom: 16 }}>
             <strong>{d.title}</strong>
             <div>{d.description}</div>
+            {d.sourceUrl && <div style={{ marginTop: 6 }}><a href={d.sourceUrl} target="_blank" rel="noreferrer">Official source: {d.sourceName || d.sourceUrl} ↗</a></div>}
             {d.datasetFile && (
               <a href={getFileUrl(d.datasetFile)} target="_blank" rel="noreferrer">⬇️ Download</a>
             )}

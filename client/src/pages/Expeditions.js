@@ -17,6 +17,7 @@ export default function Expeditions() {
           <li key={e._id} style={{ marginBottom: 16 }}>
             <strong>{e.title}</strong> <span>({e.date?.slice(0, 10)})</span>
             <div>{e.description}</div>
+            {e.sourceUrl && <div style={{ marginTop: 6 }}><a href={e.sourceUrl} target="_blank" rel="noreferrer">Official source: {e.sourceName || e.sourceUrl} ↗</a></div>}
             {e.reportFile && (
               <a href={getFileUrl(e.reportFile)} target="_blank" rel="noreferrer">📄 Report</a>
             )}

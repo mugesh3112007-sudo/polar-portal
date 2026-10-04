@@ -25,7 +25,12 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // ------- Connect Mongo -------
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/polar-portal';
 mongoose.connect(MONGODB_URI)
-  .then(() => console.log('MongoDB connected'))
+  .then(async () => {
+    console.log('MongoDB connected');
+    // Adds a small, idempotent set of records that link only to official MoES/NCPOR sources.
+    const { seedOfficialStarterContent } = require('./seedData');
+    await seedOfficialStarterContent();
+  })
   .catch((err) => console.error('MongoDB error:', err));
 
 // ------- Routes -------

@@ -7,7 +7,9 @@ const expeditionSchema = new mongoose.Schema({
   reportFile: String, // file path
   photos: [String], // array of file paths
   videos: [String], // array of file paths
-  tags: [String]
+  tags: [String],
+  sourceName: String,
+  sourceUrl: String
 }, { timestamps: true });
 
 module.exports = mongoose.model('Expedition', expeditionSchema);

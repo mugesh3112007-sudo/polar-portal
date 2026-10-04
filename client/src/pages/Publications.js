@@ -15,6 +15,7 @@ export default function Publications() {
             <strong>{pub.title}</strong> — <em>{pub.journal}</em>
             <div>{pub.authors && pub.authors.join(', ')}</div>
             <div>{pub.abstract}</div>
+            {pub.sourceUrl && <div style={{ marginTop: 6 }}><a href={pub.sourceUrl} target="_blank" rel="noreferrer">Official source: {pub.sourceName || pub.sourceUrl} ↗</a></div>}
             {pub.pdfUrl && (
               <a href={getFileUrl(pub.pdfUrl)} target="_blank" rel="noreferrer">📄 PDF</a>
             )}

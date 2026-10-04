@@ -7,7 +7,9 @@ const publicationSchema = new mongoose.Schema({
   pdfUrl: String,
   journal: String,
   publishedOn: Date,
-  tags: [String]
+  tags: [String],
+  sourceName: String,
+  sourceUrl: String
 }, { timestamps: true });
 
 module.exports = mongoose.model('Publication', publicationSchema);

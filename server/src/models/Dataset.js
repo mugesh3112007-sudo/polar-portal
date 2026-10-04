@@ -6,7 +6,9 @@ const datasetSchema = new mongoose.Schema({
   datasetFile: String,
   publishedOn: Date,
   metadata: Object,
-  tags: [String]
+  tags: [String],
+  sourceName: String,
+  sourceUrl: String
 }, { timestamps: true });
 
 module.exports = mongoose.model('Dataset', datasetSchema);

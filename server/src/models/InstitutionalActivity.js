@@ -5,7 +5,9 @@ const activitySchema = new mongoose.Schema({
   description: String,
   date: Date,
   category: String,
-  attachments: [String]
+  attachments: [String],
+  sourceName: String,
+  sourceUrl: String
 }, { timestamps: true });
 
 module.exports = mongoose.model('InstitutionalActivity', activitySchema);
